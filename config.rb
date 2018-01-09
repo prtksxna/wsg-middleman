@@ -49,6 +49,11 @@ page '/*.txt', layout: false
 helpers do
   def nav_link ( text, path, subitem = false, content = "" )
     current_path = current_page.url.to_s
+
+    # Everything starts with a "/" so the matching fails
+    current_path = "index.html" if current_path == "/"
+    path = "index.html" if path == "/"
+
     is_current = ( current_path == path ) || ( subitem == false && path.start_with?( current_path.split( "--" )[0] ) )
 
     link_options = {}
