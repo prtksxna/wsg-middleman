@@ -1,21 +1,35 @@
 <%
-# This is a hack! Can be much cleaner
-visual_submenu = "<ul class=\"nav__sub-items\">"
-visual_submenu += nav_link( "Principles", "/visual-style.html", true )
-visual_submenu += nav_link( "Colors", "/visual-style--colors.html", true )
-visual_submenu += nav_link( "Typography", "/visual-style--typography.html", true )
-visual_submenu += nav_link( "Icons", "/visual-style--icons.html", true )
-visual_submenu += nav_link( "Imagery", "/visual-style--imagery.html", true )
-visual_submenu += nav_link( "Illustrations", "/visual-style--illustrations.html", true )
-visual_submenu += "</ul>"
+def make_menu_item menu, sub = false, submenu = ""
+  return nav_link( menu.name.to_s, menu.path.to_s, sub, submenu )
+end
+
+def build_menu menu, sub = false
+  toc = ""
+
+  menu.each do | menu_item |
+    if menu_item.submenu
+      subtoc = "<ul class=\"nav__sub-items\">"
+      subtoc += build_menu( menu_item.submenu, true )
+      subtoc += "</ul>"
+
+      toc += make_menu_item( menu_item, sub, subtoc )
+    else
+      toc += make_menu_item( menu_item, sub )
+    end
+  end
+
+  return toc
+end
+
+toc = build_menu data.toc
 %>
-			<div class="col col--start">
-				<input type="checkbox" id="trigger--nav-main" class="trigger--nav-main">
-				<nav id="nav--main" class="nav nav--main" role="navigation">
-					<ol>
-						<%= nav_link( "Introduction", "/" ) %>
-						<%= nav_link( "Design principles", "/design-principles.html" ) %>
-						<%= nav_link( "Visual style", "/visual-style.html", false, visual_submenu ) %>
-					</ol>
-				</nav>
-			</div>
+
+
+<div class="col col--start">
+	<input type="checkbox" id="trigger--nav-main" class="trigger--nav-main">
+	<nav id="nav--main" class="nav nav--main" role="navigation">
+		<ol>
+			<%= toc %>
+		</ol>
+	</nav>
+</div>

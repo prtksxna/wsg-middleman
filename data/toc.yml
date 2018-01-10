@@ -1,0 +1,19 @@
+- name: Introduction
+  path: "/"
+- name: Design principles
+  path: "/design-principles.html"
+- name: Visual style
+  path: "/visual-style.html"
+  submenu:
+    - name: Principles
+      path: "/visual-style.html"
+    - name: Colors
+      path: "/visual-style--colors.html"
+    - name: Typography
+      path: "/visual-style--typography.html"
+    - name: Icons
+      path: "/visual-style--icons.html"
+    - name: Imagery
+      path: "/visual-style--imagery.html"
+    - name: Illustrations
+      path: "/visual-style--illustrations.html"
